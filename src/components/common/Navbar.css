@@ -1,0 +1,44 @@
+/* src/components/common/Navbar.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 220px; /* Match sidebar width */
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  padding: 0 2rem;
+  background-color: var(--bg);
+  color: var(--text);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s;
+}
+
+.navbar.light {
+  --bg: #ffffff;
+  --text: #000000;
+}
+
+.navbar.dark {
+  --bg: #1a1a1a;
+  --text: #ffffff;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem; /* Keep emoji size */
+  cursor: pointer;
+  padding: 0.20rem; /* Reduce padding */
+  line-height: 0.20;   /* Tighten vertical spacing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

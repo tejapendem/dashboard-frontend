@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.rotating-text-container {
+  position: fixed;
+  bottom: 20px;
+  right: 200px;
+  z-index: 1000; /* Make sure it appears above other elements */
+}

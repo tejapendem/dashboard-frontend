@@ -1,0 +1,87 @@
+.projects-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.status-columns {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.column {
+  flex: 1;
+  min-width: 280px;
+}
+
+.task-item {
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.status-select label {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+/* .status-select select {
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+} */
+
+.status-select select {
+  appearance: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  background-color: inherit;
+  color: inherit;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 0.65rem;
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+
+.status-select select:hover,
+.status-select select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.light-mode .status-select select {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.dark-mode .status-select select {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.delete-btn:hover {
+  color: #dc3545; /* Bootstrap danger red */
+}
