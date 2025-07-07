@@ -18,7 +18,8 @@ function AuthPage() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/login/", loginData);
+      // const res = await axios.post("http://localhost:8000/api/login/", loginData);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/login/`, loginData);
       localStorage.setItem("token", res.data.access);
       alert("Login successful!");
       window.location.href = "/home"; // redirect after login
@@ -36,7 +37,8 @@ function AuthPage() {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/signup/", {
+      // await axios.post("http://localhost:8000/api/signup/", {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/signup/`, {
         username: signupData.username,
         email: signupData.email,
         password: signupData.password,
