@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
-import axios from "axios";
+import axios from "../../api/axios"; 
 import { ThemeContext } from "../../context/ThemeContext";
 import "./Home.css";
 
@@ -19,19 +19,26 @@ function Home() {
     due_date: "",
   });
 
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
-  const fetchMetrics = useCallback(async () => {
+  // const fetchMetrics = useCallback(async () => {
+  //   try {
+  //     // const response = await axios.get("http://localhost:8000/api/tasks/metrics/", {
+  //     //   headers: { Authorization: `Bearer ${token}` },
+  //     // });
+  //     setMetrics(response.data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch metrics:", error);
+  //   }
+  // }, [token]);
+    const fetchMetrics = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/tasks/metrics/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get("tasks/metrics/");
       setMetrics(response.data);
     } catch (error) {
       console.error("Failed to fetch metrics:", error);
     }
-  }, [token]);
-
+  }, []);
   useEffect(() => {
     fetchMetrics();
   }, [fetchMetrics]);
@@ -43,12 +50,24 @@ function Home() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.post("http://localhost:8000/api/tasks/create/", formData, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     alert("Task created successfully!");
+  //     setFormData({ title: "", description: "", tags: "", due_date: "" });
+  //     fetchMetrics();
+  //   } catch (error) {
+  //     alert("Error creating task.");
+  //     console.error(error);
+  //   }
+  // };
+    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/api/tasks/create/", formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post("tasks/create/", formData);
       alert("Task created successfully!");
       setFormData({ title: "", description: "", tags: "", due_date: "" });
       fetchMetrics();
@@ -57,7 +76,6 @@ function Home() {
       console.error(error);
     }
   };
-
   return (
     <div className="page-background">
       <div className={`home-container ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}>
