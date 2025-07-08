@@ -77,14 +77,15 @@
 
 // export default instance;
 
-
-
+// src/utils/axiosInstance.js
 import axios from "axios";
 
-const baseURL = `${process.env.REACT_APP_API_URL}/api/`;
+// Normalize baseURL by removing trailing slash from env variable
+const baseURL = `${process.env.REACT_APP_API_URL.replace(/\/$/, "")}/api/`;
 
 const instance = axios.create({ baseURL });
 
+// Attach access token to each request
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("access");
@@ -96,6 +97,7 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Handle token refresh on 401
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -108,11 +110,14 @@ instance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const res = await axios.post(`${baseURL}token/refresh/`, {
+        const refreshResponse = await axios.post(`${baseURL}token/refresh/`, {
           refresh: localStorage.getItem("refresh"),
         });
-        localStorage.setItem("access", res.data.access);
-        originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
+
+        const newAccess = refreshResponse.data.access;
+        localStorage.setItem("access", newAccess);
+
+        originalRequest.headers.Authorization = `Bearer ${newAccess}`;
         return instance(originalRequest);
       } catch (refreshError) {
         localStorage.removeItem("access");
@@ -127,3 +132,4 @@ instance.interceptors.response.use(
 );
 
 export default instance;
+

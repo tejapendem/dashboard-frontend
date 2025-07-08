@@ -130,7 +130,19 @@ function Home() {
     due_date: "",
   });
 
-  const fetchMetrics = useCallback(async () => {
+  // const token = localStorage.getItem("token");
+
+  // const fetchMetrics = useCallback(async () => {
+  //   try {
+  //     // const response = await axios.get("http://localhost:8000/api/tasks/metrics/", {
+  //     //   headers: { Authorization: `Bearer ${token}` },
+  //     // });
+  //     setMetrics(response.data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch metrics:", error);
+  //   }
+  // }, [token]);
+    const fetchMetrics = useCallback(async () => {
     try {
       const response = await axios.get("tasks/metrics/");
       setMetrics(response.data);
@@ -150,7 +162,21 @@ function Home() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.post("http://localhost:8000/api/tasks/create/", formData, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     alert("Task created successfully!");
+  //     setFormData({ title: "", description: "", tags: "", due_date: "" });
+  //     fetchMetrics();
+  //   } catch (error) {
+  //     alert("Error creating task.");
+  //     console.error(error);
+  //   }
+  // };
+    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.post("tasks/create/", formData);
@@ -162,7 +188,6 @@ function Home() {
       console.error(error);
     }
   };
-
   return (
     <div className="page-background">
       <div className={`home-container ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}>
