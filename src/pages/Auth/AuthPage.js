@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../../api/axios"; // Adjust the path as necessary
 import "./AuthPage.css";
 
 function AuthPage() {
@@ -15,20 +15,32 @@ function AuthPage() {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
   };
 
-  const handleLoginSubmit = async (e) => {
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     // const res = await axios.post("http://localhost:8000/api/login/", loginData);
+  //     const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/login/`, loginData);
+  //     localStorage.setItem("token", res.data.access);
+  //     alert("Login successful!");
+  //     window.location.href = "/home"; // redirect after login
+  //   } catch (error) {
+  //     alert("Login failed!");
+  //     console.error(error);
+  //   }
+  // };
+    const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const res = await axios.post("http://localhost:8000/api/login/", loginData);
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/login/`, loginData);
-      localStorage.setItem("token", res.data.access);
+      const res = await axios.post("login/", loginData); // ✅ no /api/ prefix needed
+      localStorage.setItem("access", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
       alert("Login successful!");
-      window.location.href = "/home"; // redirect after login
+      window.location.href = "/#home";
     } catch (error) {
       alert("Login failed!");
       console.error(error);
     }
   };
-
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     if (signupData.password !== signupData.confirmPassword) {
@@ -36,9 +48,22 @@ function AuthPage() {
       return;
     }
 
+  //   try {
+  //     // await axios.post("http://localhost:8000/api/signup/", {
+  //     await axios.post(`${process.env.REACT_APP_API_URL}/api/signup/`, {
+  //       username: signupData.username,
+  //       email: signupData.email,
+  //       password: signupData.password,
+  //     });
+  //     alert("Signup successful! You can now log in.");
+  //     setIsLogin(true);
+  //   } catch (error) {
+  //     alert("Signup failed!");
+  //     console.error(error);
+  //   }
+  // };
     try {
-      // await axios.post("http://localhost:8000/api/signup/", {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/signup/`, {
+      await axios.post("signup/", {
         username: signupData.username,
         email: signupData.email,
         password: signupData.password,
@@ -50,7 +75,6 @@ function AuthPage() {
       console.error(error);
     }
   };
-
   return (
     <div className="auth-wrapper">
       <div className="auth-title">Login Form</div>

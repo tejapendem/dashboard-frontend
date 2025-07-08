@@ -18,7 +18,8 @@ const TaskForm = ({ onSuccess }) => {
     }
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/tasks/create/", form);
+      // await axios.post("http://127.0.0.1:8000/api/tasks/create/", form);
+      await axios.post("tasks/create/", form);
       toast.success("Task created!");
       setForm({ title: "", description: "", tags: "" });
       if (onSuccess) onSuccess();

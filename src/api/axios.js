@@ -19,15 +19,72 @@
 // export default instance;
 
 
-// src/utils/axiosInstance.js
+
+/// local host axios instance
+
+// // src/utils/axiosInstance.js
+// import axios from "axios";
+
+// // Create instance
+// const instance = axios.create({
+//   baseURL: "http://localhost:8000/api/",
+// });
+
+// // Request interceptor to attach access token
+// instance.interceptors.request.use(
+//   (config) => {
+//     const token = localStorage.getItem("access");
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
+
+// // Response interceptor to handle token expiration and refresh
+// instance.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const originalRequest = error.config;
+
+//     if (
+//       error.response?.status === 401 &&
+//       !originalRequest._retry &&
+//       localStorage.getItem("refresh")
+//     ) {
+//       originalRequest._retry = true;
+//       try {
+//         const res = await axios.post("http://localhost:8000/api/token/refresh/", {
+//           refresh: localStorage.getItem("refresh"),
+//         });
+
+//         localStorage.setItem("access", res.data.access);
+
+//         originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
+//         return instance(originalRequest);
+//       } catch (refreshError) {
+//         localStorage.removeItem("access");
+//         localStorage.removeItem("refresh");
+//         window.location.href = "/login"; // Redirect to login if refresh fails
+//         return Promise.reject(refreshError);
+//       }
+//     }
+
+//     return Promise.reject(error);
+//   }
+// );
+
+// export default instance;
+
+
+
 import axios from "axios";
 
-// Create instance
-const instance = axios.create({
-  baseURL: "http://localhost:8000/api/",
-});
+const baseURL = `${process.env.REACT_APP_API_URL}/api/`;
 
-// Request interceptor to attach access token
+const instance = axios.create({ baseURL });
+
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("access");
@@ -39,7 +96,6 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor to handle token expiration and refresh
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -52,18 +108,16 @@ instance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const res = await axios.post("http://localhost:8000/api/token/refresh/", {
+        const res = await axios.post(`${baseURL}token/refresh/`, {
           refresh: localStorage.getItem("refresh"),
         });
-
         localStorage.setItem("access", res.data.access);
-
         originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
         return instance(originalRequest);
       } catch (refreshError) {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
-        window.location.href = "/login"; // Redirect to login if refresh fails
+        window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
