@@ -35,7 +35,7 @@ function AuthPage() {
       localStorage.setItem("access", res.data.access);
       localStorage.setItem("refresh", res.data.refresh);
       alert("Login successful!");
-      window.location.href = "/#home";
+      window.location.href = "/dashboard-frontend/#home";
     } catch (error) {
       alert("Login failed!");
       console.error(error);
